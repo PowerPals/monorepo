@@ -7,3 +7,16 @@
     --custom-white: #F1F8E9;  /* HEX color for custom gray */
     --custom-black: #263238;  /* HEX color for custom gray */
   }
+
+.table-header-bg {
+    background-color: var(--custom-blue);
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+  }
+  
+#root {
+    height: 100%;
+}
