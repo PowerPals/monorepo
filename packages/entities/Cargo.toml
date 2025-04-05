@@ -1,0 +1,13 @@
+[package]
+name = "powerpals-entities"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+powerpals-tsid = { path = "../tsid" }
+prefixed-tsid = { version = "0.4" }
+chrono = { version = "0.4", features = ["serde"] }
+diesel = { version = "2", features = ["postgres_backend", "chrono"] }
+serde = { version = "1.0", features = ["derive"] }
+powerpals-macaddr = { path = "../macaddr" }

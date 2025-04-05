@@ -1,0 +1,10 @@
+[package]
+name = "powerpals-datacore"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+axum = { version = "0.8" }
+oasgen = { version = "0.25", features = ["axum"] }
+tokio = { version = "1.44", features = ["rt-multi-thread"] }

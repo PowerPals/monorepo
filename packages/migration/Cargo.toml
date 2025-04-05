@@ -1,0 +1,9 @@
+[package]
+name = "powerpals-migration"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+diesel = { version = "2", features = ["postgres"] }
+diesel_migrations = { version = "2" }

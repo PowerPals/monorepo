@@ -1,4 +1,9 @@
 [workspace]
 members = [
-  "packages/backend"]
+  "packages/datacore",
+  "packages/migration",
+  "packages/entities",
+  "packages/tsid",
+  "packages/macaddr",
+]
 resolver = "2"
