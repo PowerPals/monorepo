@@ -12,3 +12,11 @@ pub struct PowerLog {
     pub device_id: TSIDDatabaseID<IDDevice>,
     pub power_watts: f64,
 }
+
+#[derive(Insertable)]
+#[diesel(table_name = crate::schema::power_logs)]
+#[diesel(check_for_backend(diesel::pg::Pg))]
+pub struct NewPowerLog {
+    pub device_id: TSIDDatabaseID<IDDevice>,
+    pub power_watts: f64,
+}
