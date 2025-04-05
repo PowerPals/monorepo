@@ -8,3 +8,15 @@ publish = false
 axum = { version = "0.8" }
 oasgen = { version = "0.25", features = ["axum"] }
 tokio = { version = "1.44", features = ["rt-multi-thread"] }
+anyhow = { version = "1.0" }
+prefixed-tsid = { version = "0.5", features = ["diesel", "serde", "oasgen"] }
+figment = { version = "0.10", features = ["toml"] }
+serde = { version = "1.0" }
+diesel-async = { version = "0.5", features = ["postgres", "bb8"] }
+bb8 = { version = "0.8" }
+chrono = { version = "0.4" }
+diesel = { version = "2.2" }
+
+powerpals-entities = { path = "../entities" }
+powerpals-tsid = { path = "../tsid" }
+powerpals-macaddr = { path = "../macaddr/" }

@@ -9,9 +9,10 @@ use diesel::{
     sql_types::MacAddr,
 };
 use mac_address::MacAddress;
-use serde::Serialize;
+use oasgen::{OaSchema, Schema, SchemaData, StringType};
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, FromSqlRow, AsExpression)]
+#[derive(Debug, Clone, Serialize, FromSqlRow, AsExpression, Deserialize)]
 #[diesel(sql_type=diesel::sql_types::MacAddr)]
 pub struct HardwareAddress(MacAddress);
 
@@ -44,5 +45,14 @@ impl ToSql<MacAddr, Pg> for HardwareAddress {
 impl Display for HardwareAddress {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", self.0)
+    }
+}
+
+impl OaSchema for HardwareAddress {
+    fn schema() -> oasgen::Schema {
+        Schema {
+            kind: oasgen::SchemaKind::Type(oasgen::Type::String(StringType::default())),
+            data: SchemaData::default(),
+        }
     }
 }

@@ -6,8 +6,10 @@ publish = false
 
 [dependencies]
 powerpals-tsid = { path = "../tsid" }
-prefixed-tsid = { version = "0.4" }
+prefixed-tsid = { version = "0.5", features = ["diesel"] }
 chrono = { version = "0.4", features = ["serde"] }
 diesel = { version = "2", features = ["postgres_backend", "chrono"] }
 serde = { version = "1.0", features = ["derive"] }
+oasgen = { version = "0.25", features = ["axum", "chrono"] }
+
 powerpals-macaddr = { path = "../macaddr" }
