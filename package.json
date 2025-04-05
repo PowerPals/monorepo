@@ -1,0 +1,5 @@
+{
+	"name": "powerpals",
+	"private": true,
+	"workspaces": ["packages/*"]
+}
