@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+:root {
+    --custom-blue: #2979FF;  /* HEX color for custom blue */
+    --custom-yellow: #FFD600; /* HEX color for custom green */
+    --custom-red: #F03A3A;   /* HEX color for custom red */
+    --custom-white: #F1F8E9;  /* HEX color for custom gray */
+    --custom-black: #263238;  /* HEX color for custom gray */
+  }
