@@ -1,5 +1,10 @@
 {
   "name": "powerpals",
   "private": true,
-  "workspaces": ["packages/*"]
+  "workspaces": ["packages/*"],
+  "dependencies": {
+    "openapi-fetch": "^0.13.5",
+    "openapi-react-query": "^0.3.1",
+    "react-query": "^3.39.3"
+  }
 }
