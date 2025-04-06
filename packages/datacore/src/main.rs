@@ -4,6 +4,7 @@ use api::{
 };
 use axum::Router;
 use config::Config;
+use db::run_migrations;
 use diesel_async::pooled_connection::{AsyncDieselConnectionManager, bb8::Pool};
 use oasgen::Server;
 
@@ -16,6 +17,9 @@ mod error;
 #[tokio::main]
 pub async fn main() {
     let config = Config::parse_config();
+
+    run_migrations(&config).await;
+
     let db_manager = AsyncDieselConnectionManager::<diesel_async::AsyncPgConnection>::new(
         config.database_url.clone(),
     );

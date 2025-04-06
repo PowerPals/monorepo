@@ -15,7 +15,8 @@ serde = { version = "1.0" }
 diesel-async = { version = "0.5", features = ["postgres", "bb8"] }
 bb8 = { version = "0.8" }
 chrono = { version = "0.4" }
-diesel = { version = "2.2" }
+diesel = { version = "2.2", features = ["postgres"] }
+diesel_migrations = { version = "2.2" }
 
 powerpals-entities = { path = "../entities" }
 powerpals-tsid = { path = "../tsid" }
