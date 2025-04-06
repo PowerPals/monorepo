@@ -1,35 +1,31 @@
-import network
-import requests
-import ubinascii
-import time
-import random
+from network import WLAN
+from urequests import post
+from ubinascii import hexlify
+from time import sleep
+from random import randint
 
-nic = network.WLAN(network.WLAN.IF_STA)
+nic = WLAN(WLAN.IF_STA)
 nic.active(True)
 nic.connect("UoB-IoT", "f9p9wwc4")
 print("connected")
 
-def register():
-    mac = nic.config("mac")
-    hex_mac = ubinascii.hexlify(mac, ":").decode()
+mac = nic.config("mac")
+hex_mac = hexlify(mac, ":").decode()
 
-    resp = requests.post("https://powerpal.palk.dev/devices", json={
-        "user_id": "cu_0000000000001",
-        "hardware_address": hex_mac
-    })
+resp = post("https://powerpal.palk.dev/devices", json={
+    "user_id": "cu_0000000000001",
+    "hardware_address": hex_mac
+})
 
-    return resp.json()["id"]
-
-def log_power(device_id, power_watts):
-    requests.post("https://powerpal.palk.dev/power_logs/log", json={
-        "device_id": device_id,
-        "power_watts": power_watts 
-    })
-    print(f"Logged power {power_watts}.")
-
-my_id = register()
+my_id = resp.json()["id"]
 print("registered")
 
 while True:
-    log_power(my_id, random.randint(5, 200))
-    time.sleep(5)
+    sleep(5)
+    try:
+        r = post("https://powerpal.palk.dev/power_logs/log", json={
+            "device_id": my_id,
+            "power_watts": randint(5, 200)
+        })
+    except Exception as e:
+        print(e)
