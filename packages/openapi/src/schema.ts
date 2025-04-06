@@ -122,6 +122,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/departments/{department_id}/power_logs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["api_power_logs_recent_in_dept_api_power_logs_recent_in_dept"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -159,6 +175,11 @@ export interface components {
         RegisterDeviceRequest: {
             user_id: string;
             hardware_address: string;
+        };
+        UsageByUser: {
+            user_id: string;
+            user_username: string;
+            usage_watt_hours: number;
         };
     };
     responses: never;
@@ -303,6 +324,27 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Department"][];
+                };
+            };
+        };
+    };
+    api_power_logs_recent_in_dept_api_power_logs_recent_in_dept: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                department_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UsageByUser"][];
                 };
             };
         };

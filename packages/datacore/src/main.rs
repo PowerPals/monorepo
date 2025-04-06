@@ -3,7 +3,8 @@ use api::{
     devices::register::api_devices_register,
     health::api_health,
     power_logs::{
-        latest::api_power_logs_latest, log::api_power_logs_log, total::api_power_logs_total,
+        latest::api_power_logs_latest, log::api_power_logs_log,
+        recent_in_dept::api_power_logs_recent_in_dept, total::api_power_logs_total,
     },
     users::get::api_users_get,
 };
@@ -14,6 +15,7 @@ use diesel_async::pooled_connection::{AsyncDieselConnectionManager, bb8::Pool};
 use oasgen::Server;
 
 mod api;
+mod api_entities;
 mod config;
 mod controllers;
 mod db;
@@ -42,6 +44,10 @@ pub async fn main() {
         .get("/users/{user_id}/power_logs/latest", api_power_logs_latest)
         .get("/users/{user_id}/power_logs/total", api_power_logs_total)
         .get("/departments", api_departments_list)
+        .get(
+            "/departments/{department_id}/power_logs",
+            api_power_logs_recent_in_dept,
+        )
         .route_json_spec("/openapi.json")
         .freeze();
 

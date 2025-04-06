@@ -19,6 +19,7 @@ diesel = { version = "2.2", features = ["postgres"] }
 diesel_migrations = { version = "2.2" }
 tracing = { version = "0.1" }
 tracing-subscriber = { version = "0.3" }
+itertools = { version = "0.14" }
 
 powerpals-entities = { path = "../entities" }
 powerpals-tsid = { path = "../tsid" }
