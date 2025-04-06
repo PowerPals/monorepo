@@ -18,3 +18,4 @@ def register():
     return resp.json()["id"]
 
 my_id = register()
+print(my_id)

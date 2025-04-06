@@ -20,6 +20,8 @@ pub async fn api_devices_register(
     Json(data): Json<RegisterDeviceRequest>,
 ) -> Result<Json<Device>, APIError> {
     let mut db = pool.get().await?;
+
+    println!("Attempting device registration for {}", data.user_id);
     let new_device =
         DevicesController::register_device(&mut db, data.user_id, data.hardware_address).await?;
 
