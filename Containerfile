@@ -1,7 +1,7 @@
 FROM docker.io/rust:1-slim-bookworm as builder
 
 RUN apt-get update
-RUN apt-get install -y libssl-dev pkg-config
+RUN apt-get install -y libssl-dev pkg-config libpq-dev
 
 WORKDIR /usr/src/powerpals
 COPY packages/datacore packages/datacore
