@@ -1,6 +1,11 @@
+use diesel::prelude::*;
 use diesel_async::{AsyncPgConnection, RunQueryDsl};
-use powerpals_entities::{power_logs::NewPowerLog, schema::power_logs};
-use powerpals_tsid::IDDevice;
+use powerpals_entities::{
+    power_logs::{NewPowerLog, PowerLog},
+    prelude::power_logs_dsl,
+    schema::{devices, power_logs},
+};
+use powerpals_tsid::{IDClientUser, IDDevice};
 use prefixed_tsid::tsid::TSIDDatabaseID;
 
 use crate::error::error::APIError;
@@ -24,5 +29,20 @@ impl PowerLogsController {
             .await?;
 
         Ok(())
+    }
+
+    pub async fn get_latest_for_user(
+        conn: &mut AsyncPgConnection,
+        user_id: TSIDDatabaseID<IDClientUser>,
+    ) -> Result<Option<PowerLog>, APIError> {
+        let log = power_logs_dsl
+            .inner_join(devices::table)
+            .filter(devices::user_id.eq(user_id))
+            .select(PowerLog::as_select())
+            .get_result(conn)
+            .await
+            .optional()?;
+
+        Ok(log)
     }
 }

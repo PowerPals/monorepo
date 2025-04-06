@@ -1,6 +1,8 @@
 use api::{
-    devices::register::api_devices_register, health::api_health,
-    power_logs::log::api_power_logs_log, users::get::api_users_get,
+    devices::register::api_devices_register,
+    health::api_health,
+    power_logs::{latest::api_power_logs_latest, log::api_power_logs_log},
+    users::get::api_users_get,
 };
 use axum::Router;
 use config::Config;
@@ -30,6 +32,7 @@ pub async fn main() {
         .get("/users/{user_id}", api_users_get)
         .post("/devices", api_devices_register)
         .post("/power_logs/log", api_power_logs_log)
+        .get("/users/{user_id}/power_logs/latest", api_power_logs_latest)
         .route_json_spec("/openapi.json")
         .freeze();
 
