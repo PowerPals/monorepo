@@ -15,7 +15,7 @@ RUN cargo install --path packages/datacore --profile release
 
 FROM docker.io/debian:bookworm-slim
 RUN apt-get update
-RUN apt-get install -y libssl-dev pkg-config ca-certificates
+RUN apt-get install -y libssl-dev pkg-config ca-certificates libpq-dev
 RUN update-ca-certificates
 
 COPY --from=builder /usr/local/cargo/bin/powerpals-datacore /opt/powerpals-datacore
