@@ -21,6 +21,10 @@ mod error;
 
 #[tokio::main]
 pub async fn main() {
+    tracing_subscriber::fmt()
+        .with_max_level(tracing::Level::INFO)
+        .init();
+
     let config = Config::parse_config();
 
     run_migrations(&config).await;

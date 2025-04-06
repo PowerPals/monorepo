@@ -3,6 +3,7 @@ import laptop from "../images/generalLaptop.svg";
 import logo from "../images/wattLogo.svg";
 import happyDuck from "../images/happyDuck.svg";
 import LiveEnergy from "../components/LiveEnergy";
+import TotalEnergy from "../components/TotalEnergy";
 
 export default function HomePage() {
 	const [leftBoxOpen, setLeftBoxOpen] = useState(false);
@@ -62,6 +63,7 @@ export default function HomePage() {
 						<p className="text-base font-semibold">
 							Total Energy and Carbon Use
 						</p>
+						<TotalEnergy />
 					</div>
 				)}
 				{rightBoxOpen && (

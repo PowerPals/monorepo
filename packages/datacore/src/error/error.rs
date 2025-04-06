@@ -43,7 +43,7 @@ impl From<RunError<PoolError>> for APIError {
 impl From<diesel::result::Error> for APIError {
     fn from(value: diesel::result::Error) -> Self {
         Self {
-            msg: value.to_string(),
+            msg: format!("query database: {}", value),
             status: StatusCode::INTERNAL_SERVER_ERROR,
         }
     }

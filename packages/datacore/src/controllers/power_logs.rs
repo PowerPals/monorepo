@@ -1,4 +1,4 @@
-use diesel::{dsl::sum, prelude::*};
+use diesel::prelude::*;
 use diesel_async::{AsyncPgConnection, RunQueryDsl};
 use powerpals_entities::{
     power_logs::{NewPowerLog, PowerLog},
@@ -38,6 +38,8 @@ impl PowerLogsController {
         let log = power_logs_dsl
             .inner_join(devices::table)
             .filter(devices::user_id.eq(user_id))
+            .order(power_logs::time.desc())
+            .limit(1)
             .select(PowerLog::as_select())
             .get_result(conn)
             .await
@@ -50,13 +52,27 @@ impl PowerLogsController {
         conn: &mut AsyncPgConnection,
         user_id: TSIDDatabaseID<IDClientUser>,
     ) -> Result<f64, APIError> {
-        let sum: Option<f64> = power_logs_dsl
+        let logs = power_logs_dsl
             .inner_join(devices::table)
             .filter(devices::user_id.eq(user_id))
-            .select(sum(power_logs::power_watts))
-            .get_result(conn)
+            .order(power_logs::time.asc())
+            .select(PowerLog::as_select())
+            .get_results(conn)
             .await?;
 
-        Ok(sum.unwrap_or(0_f64))
+        let mut total_watt_hours = 0_f64;
+
+        for (index, log) in logs.iter().enumerate() {
+            if index == logs.len() - 1 {
+                continue;
+            }
+
+            let time_diff = logs[index + 1].time - log.time;
+            let avg_power = (logs[index + 1].power_watts + log.power_watts) / 2_f64;
+            let num_hours = time_diff.num_seconds() as f64 / 60_f64 / 60_f64;
+            total_watt_hours += num_hours * avg_power;
+        }
+
+        Ok(total_watt_hours)
     }
 }
