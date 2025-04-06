@@ -16,7 +16,7 @@ export default function HomePage() {
 				<img
 					src={logo}
 					alt="Site Logo"
-					className="w-[500px] object-scale-down"
+					className="w-[1000px] object-scale-down"
 				/>
 			</div>
 
