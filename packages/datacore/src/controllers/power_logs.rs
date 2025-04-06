@@ -1,4 +1,4 @@
-use diesel::prelude::*;
+use diesel::{dsl::sum, prelude::*};
 use diesel_async::{AsyncPgConnection, RunQueryDsl};
 use powerpals_entities::{
     power_logs::{NewPowerLog, PowerLog},
@@ -44,5 +44,19 @@ impl PowerLogsController {
             .optional()?;
 
         Ok(log)
+    }
+
+    pub async fn get_total_for_user(
+        conn: &mut AsyncPgConnection,
+        user_id: TSIDDatabaseID<IDClientUser>,
+    ) -> Result<f64, APIError> {
+        let sum: Option<f64> = power_logs_dsl
+            .inner_join(devices::table)
+            .filter(devices::user_id.eq(user_id))
+            .select(sum(power_logs::power_watts))
+            .get_result(conn)
+            .await?;
+
+        Ok(sum.unwrap_or(0_f64))
     }
 }
