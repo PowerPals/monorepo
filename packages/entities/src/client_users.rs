@@ -1,7 +1,7 @@
 use chrono::{DateTime, Utc};
 use diesel::prelude::*;
 use oasgen::OaSchema;
-use powerpals_tsid::IDClientUser;
+use powerpals_tsid::{IDClientUser, IDDepartment};
 use prefixed_tsid::tsid::TSIDDatabaseID;
 use serde::Serialize;
 
@@ -11,6 +11,7 @@ use serde::Serialize;
 pub struct ClientUser {
     pub id: TSIDDatabaseID<IDClientUser>,
     pub username: String,
+    pub department_id: TSIDDatabaseID<IDDepartment>,
     pub created_at: DateTime<Utc>,
     pub updated_at: DateTime<Utc>,
 }

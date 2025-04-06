@@ -1,4 +1,5 @@
 use api::{
+    departments::list::api_departments_list,
     devices::register::api_devices_register,
     health::api_health,
     power_logs::{
@@ -36,6 +37,7 @@ pub async fn main() {
         .post("/power_logs/log", api_power_logs_log)
         .get("/users/{user_id}/power_logs/latest", api_power_logs_latest)
         .get("/users/{user_id}/power_logs/total", api_power_logs_total)
+        .get("/departments", api_departments_list)
         .route_json_spec("/openapi.json")
         .freeze();
 

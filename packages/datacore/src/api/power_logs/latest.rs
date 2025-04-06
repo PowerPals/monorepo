@@ -9,6 +9,8 @@ use prefixed_tsid::tsid::TSIDDatabaseID;
 
 use crate::{controllers::power_logs::PowerLogsController, db::Pool, error::error::APIError};
 
+/// Shows the last recorded power log for the user across all their devices. Poll this to get a
+/// frequently updated indication of live consumption.
 #[oasgen]
 pub async fn api_power_logs_latest(
     State(pool): State<Pool>,

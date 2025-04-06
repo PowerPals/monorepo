@@ -14,6 +14,7 @@ pub struct RegisterDeviceRequest {
     pub hardware_address: HardwareAddress,
 }
 
+/// Registers a new device for a user. This should only ever be called once for a given device.
 #[oasgen]
 pub async fn api_devices_register(
     State(pool): State<Pool>,

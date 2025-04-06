@@ -6,6 +6,14 @@ diesel::table! {
         username -> Varchar,
         created_at -> Timestamptz,
         updated_at -> Timestamptz,
+        department_id -> Int8,
+    }
+}
+
+diesel::table! {
+    departments (id) {
+        id -> Int8,
+        name -> Varchar,
     }
 }
 
@@ -26,11 +34,13 @@ diesel::table! {
     }
 }
 
+diesel::joinable!(client_users -> departments (department_id));
 diesel::joinable!(devices -> client_users (user_id));
 diesel::joinable!(power_logs -> devices (device_id));
 
 diesel::allow_tables_to_appear_in_same_query!(
     client_users,
+    departments,
     devices,
     power_logs,
 );

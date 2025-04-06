@@ -8,6 +8,7 @@ use prefixed_tsid::tsid::TSIDDatabaseID;
 
 use crate::{controllers::power_logs::PowerLogsController, db::Pool, error::error::APIError};
 
+/// Calculates the sum total of all the power consumed by a user ever, in "Watt hours" (Wh).
 #[oasgen]
 pub async fn api_power_logs_total(
     State(pool): State<Pool>,

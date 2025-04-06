@@ -45,6 +45,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /** @description Registers a new device for a user. This should only ever be called once for a given device. */
         post: operations["api_devices_register_api_devices_register"];
         delete?: never;
         options?: never;
@@ -61,6 +62,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /** @description Logs a power consumption event. */
         post: operations["api_power_logs_log_api_power_logs_log"];
         delete?: never;
         options?: never;
@@ -75,7 +77,43 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /** @description Shows the last recorded power log for the user across all their devices. Poll this to get a
+         *     frequently updated indication of live consumption. */
         get: operations["api_power_logs_latest_api_power_logs_latest"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users/{user_id}/power_logs/total": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Calculates the sum total of all the power consumed by a user ever, in "Watt hours" (Wh). */
+        get: operations["api_power_logs_total_api_power_logs_total"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/departments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description List all the departments in the organisation. They are returned in no particular order. */
+        get: operations["api_departments_list_api_departments_list"];
         put?: never;
         post?: never;
         delete?: never;
@@ -91,10 +129,15 @@ export interface components {
         ClientUser: {
             id: string;
             username: string;
+            department_id: string;
             /** Format: date-time */
             created_at: string;
             /** Format: date-time */
             updated_at: string;
+        };
+        Department: {
+            id: string;
+            name: string;
         };
         Device: {
             id: string;
@@ -220,6 +263,46 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PowerLog"];
+                };
+            };
+        };
+    };
+    api_power_logs_total_api_power_logs_total: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": number;
+                };
+            };
+        };
+    };
+    api_departments_list_api_departments_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Department"][];
                 };
             };
         };

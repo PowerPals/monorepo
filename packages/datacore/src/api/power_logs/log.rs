@@ -12,6 +12,7 @@ pub struct LogPowerRequest {
     pub power_watts: f64,
 }
 
+/// Logs a power consumption event.
 #[oasgen]
 pub async fn api_power_logs_log(
     State(pool): State<Pool>,
